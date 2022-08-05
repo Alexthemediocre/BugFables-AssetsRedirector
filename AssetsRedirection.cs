@@ -3,6 +3,7 @@ using HarmonyLib;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Collections.Generic;
 using UnityEngine;
 using XUnity.ResourceRedirector;
 
@@ -61,21 +62,50 @@ namespace BugFables.AssetsRedirector
     private void RedirectTextAsset(ResourceLoadedContext context)
     {
       string path = Path.Combine(Path.GetDirectoryName(base.Info.Location), context.Parameters.Path);
+      string resolved = ResolveTextFilePath(path);
+      if (resolved != null)
+      {
+        context.Asset = new TextAsset(File.ReadAllText(resolved));
+        context.Complete();
+      }
+      else if ((resolved = ResolveTextFilePath(path + ".template")) != null)
+      {
+        string processed;
+        string[] bfAsset = Resources.Load<TextAsset>(context.Parameters.Path).ToString().Replace("\r\n", "\n").Split('\n');
+        // process template file
+        string[] templateText = File.ReadAllLines(resolved);
+        foreach (string line in templateText)
+        {
+          string beforeSpace, afterSpace;
+          int firstSpaceInd, lineNum;
+
+          firstSpaceInd = line.IndexOf(' ');
+          if (firstSpaceInd < 0)
+            continue;
+          beforeSpace = line.Substring(0, firstSpaceInd);
+          afterSpace = line.Substring(firstSpaceInd + 1);
+
+          if (int.TryParse(beforeSpace, out lineNum))
+            bfAsset[lineNum] = afterSpace;
+        }
+
+        // cache modified file
+        processed = string.Join("\n", bfAsset);
+        File.WriteAllText(path, processed);
+        context.Asset = new TextAsset(processed);
+        context.Complete();
+      }
+    }
+
+    private string ResolveTextFilePath(string path)
+    {
       if (File.Exists(path))
-      {
-        context.Asset = new TextAsset(File.ReadAllText(path));
-        context.Complete();
-      }
+        return path;
       else if (File.Exists(path + ".txt"))
-      {
-        context.Asset = new TextAsset(File.ReadAllText(path + ".txt"));
-        context.Complete();
-      }
+        return path + ".txt";
       else if (File.Exists(path + ".bytes"))
-      {
-        context.Asset = new TextAsset(File.ReadAllText(path + ".bytes"));
-        context.Complete();
-      }
+        return path + ".bytes";
+      return null;
     }
 
     private void RedirectSprites(ResourceLoadedContext context)
