@@ -6,10 +6,10 @@ This fork lets template text files to be provided, replacing individual lines, r
 ## Installation instructions
 If this is not done already, you first need to install the BepInEx loader into the game. To do so, [download the latest release](https://github.com/BepInEx/BepInEx/releases) by getting the zip file marked "x64". Then, simply unzip it into the game's directory such as the `BepInEx` folder as well as the 3 provided files appears from the game's directory. If you are using Steam, this directory is by default located at `C:\Program Files (x86)\Steam\steamapps\common\Bug Fables` on Windows and at `~/.steam/steam/steamapps/common/Bug Fables` on Linux. Once the files are placed, launch the game once for the installation to complete.
 
-Once this is done, [download the latest version of the plugin](https://github.com/Alexthemediocre/BugFables-AssetsRedirector/releases) and unzip it into `BepInEx/plugins` from the game's directory. You should unzip it so the folder `AssetsRedirector` with all the files from the zip appears ***directly*** under the `plugins` folder.
+Once this is done, [download the latest version of the plugin](https://github.com/Alexthemediocre/BugFables-AssetsRedirector/releases) and unzip it into `BepInEx/plugins` from the game's directory. You should unzip it so the folder `TemplatedAssetsRedirector` with all the files from the zip appears ***directly*** under the `plugins` folder.
 
 ## Uninstallation instruction
-To uninstall the plugin, simply delete the `BepInEx/plugins/AssetsRedirector` folder from the game's directory. 
+To uninstall the plugin, simply delete the `BepInEx/plugins/TemplatedAssetsRedirector` folder from the game's directory. 
 
 If you want to entirely remove BepInEx and all of its plugins, delete the following under the game's directory:
 
@@ -44,7 +44,7 @@ The program will load the structure. Once done, click the "Export" button that a
 This process can take up to 15 minutes. Once done, you should see a `data` folder appearing at the location you chose.
 
 ### Explanation of the directory structure
-To proceed with copying an asset, you will need to check the `data/Assets/Ressources` folder from where you have performed the extraction. This folder is the root folder of ALL assets that can be redirected using this plugin. Specifically, the `audio`, `data` and `sprites` folder are supported by this plugin. If you check the plugin's directory, you will see these 3 corresponding folders. You will also notice that the folders INSIDE of them also corresponds to what you got from uTinyRipper. 
+To proceed with copying an asset, you will need to check the `data/Assets/Resources` folder from where you have performed the extraction. This folder is the root folder of ALL assets that can be redirected using this plugin. Specifically, the `audio`, `data` and `sprites` folder are supported by this plugin. If you check the plugin's directory, you will see these 3 corresponding folders. You will also notice that the folders INSIDE of them also corresponds to what you got from uTinyRipper. 
 
 > NOTE: The capitalisation of the names of the folder may differ, but NEVER RENAME THE ONES PROVIDED BY THE PLUGIN! They are correct in the plugin's folder, but uTinyRipper doesn't name them with the correct capitalisation after the extraction.
 
@@ -86,7 +86,7 @@ This section is intended ***only for developers***. You do not need to do this i
 
 This project is configured for Visual Studio 2019 (previous versions may work, but are untested). To build the project, you first need to place the required dlls into the `Libs` directory present on this repository. Refer to `Libs/README.txt` for more information on which dlls to place.
 
-Once this is done, the project should build successfully. To improve convenience, you may want to set the output path to `Bug Fables\BepInEx\plugins\AssetsRedirector` (where `Bug Fables` is the game's directory) in the project's configuration for ease of testing.
+Once this is done, the project should build successfully. To improve convenience, you may want to set the output path to `Bug Fables\BepInEx\plugins\TemplatedAssetsRedirector` (where `Bug Fables` is the game's directory) in the project's configuration for ease of testing.
 
 ### Debugging
 To debug the plugin, you will need the [dnSpy](https://github.com/0xd4d/dnSpy/releases) program (download the file ` dnSpy-net472.zip`). Once it's installed, you will need to [download this modified version of mono.dll](https://drive.google.com/open?id=1u_xyatcUWKceWajzNImkvKQuNxKgArHi) and place it at `Mono/EmbedRuntime` from the game's directory. You may want to backup or rename the original one that comes with the game in case you want to revert it.
