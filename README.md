@@ -1,10 +1,12 @@
 ## BugFables-AssetsRedirector
-A BepInEx plugin redirecting the assets of the game Bug Fables. This plugin allows modders to easilly customise the sounds, music, sprites and text data of the game by simply dropping the edited assets into a folder. This not only makes modding more accessible, but it also improves testability as it is not necessary to pack the assets into the data.unity3d file. The assets are dynamically replaced when the game needs them if they are present
+A BepInEx plugin redirecting the assets of the game Bug Fables. This plugin allows modders to easilly customise the sounds, music, sprites and text data of the game by simply dropping the edited assets into a folder. This not only makes modding more accessible, but it also improves testability as it is not necessary to pack the assets into the data.unity3d file. The assets are dynamically replaced when the game needs them if they are present.
+
+This fork lets template text files to be provided, replacing individual lines, rather than distributing partially modified text files from the game.
 
 ## Installation instructions
 If this is not done already, you first need to install the BepInEx loader into the game. To do so, [download the latest release](https://github.com/BepInEx/BepInEx/releases) by getting the zip file marked "x64". Then, simply unzip it into the game's directory such as the `BepInEx` folder as well as the 3 provided files appears from the game's directory. If you are using Steam, this directory is by default located at `C:\Program Files (x86)\Steam\steamapps\common\Bug Fables` on Windows and at `~/.steam/steam/steamapps/common/Bug Fables` on Linux. Once the files are placed, launch the game once for the installation to complete.
 
-Once this is done, [download the latest version of the plugin](https://github.com/aldelaro5/BugFables-AssetsRedirector/releases) and unzip it into `BepInEx/plugins` from the game's directory. You should unzip it so the folder `AssetsRedirector` with all the files from the zip appears ***directly*** under the `plugins` folder.
+Once this is done, [download the latest version of the plugin](https://github.com/Alexthemediocre/BugFables-AssetsRedirector/releases) and unzip it into `BepInEx/plugins` from the game's directory. You should unzip it so the folder `AssetsRedirector` with all the files from the zip appears ***directly*** under the `plugins` folder.
 
 ## Uninstallation instruction
 To uninstall the plugin, simply delete the `BepInEx/plugins/AssetsRedirector` folder from the game's directory. 
@@ -33,7 +35,7 @@ If you are using the itch.io version or the GOG version, you will need to locate
 
 Once done, start uTinyRipper and simply Drag and drop the folder ending with `_Data`. 
 
-![Screenshot](https://raw.githubusercontent.com/aldelaro5/BugFables-AssetsRedirector/master/Docs/uTinyRipper.gif)
+![Screenshot](https://raw.githubusercontent.com/Alexthemediocre/BugFables-AssetsRedirector/master/Docs/uTinyRipper.gif)
 
 The program will load the structure. Once done, click the "Export" button that appears and choose the location where you want the assets to be extracted.
 
@@ -68,6 +70,13 @@ Here are the list of supported assets and the method of redirecting them as well
 - Sound effects (.wav and .ogg only, XUnity.ResourceRedirector)
 - Music (.wav and .ogg only, Harmony patch, this patches the `PlayMusic` method of the game)
 - TextAssset in the data folder (either no extension or .txt or .bytes, XUnity.ResourceRedirector)
+
+Template files are named in the same way as TextAsset files, but with .template after the file name but before the file extension (e.g. `Items.template.txt`).
+Template files replace individual lines in the corresponding, pre-existing text asset included with the game. The line they replace is specified by putting
+the line number at the start of the line, with a space afterwards (e.g. `2 This is some replacement text`).
+Lines which do not start with a line number will be ignored.  
+Note that template files are not as dynamic as regular TextAsset files, as this plugin uses them to modify the existing assets and stores the resulting TextAsset as a file,
+named with no extension, in the same folder as the template file. These must be manually deleted or edited for changes in the template files to take effect.
 
 ## Building and debugging instructions
 This section is intended ***only for developers***. You do not need to do this if you only want to use the plugin. Refer to the ***Installation instructions*** section for this purpose.
